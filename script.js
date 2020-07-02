@@ -14,7 +14,7 @@ var majorBank = "~!@#$%^&*()_+1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn
 );
 console.log;
 
-// Write password to the #password input
+// this function returns to the user if there password isn't in our necessary range
 function generatePassword() {
   passwordLength = prompt("how long do you want your password?");
   if (passwordLength > 128 || passwordLength < 8) {
@@ -33,10 +33,9 @@ function generatePassword() {
   var newpassword = [];
 
   // False at first. Later these confirms will be used
-
   numbers = confirm("do you want numbers in your password?");
   console.log(numbers);
-  symbols = confirm("do youwant symbols in your password?");
+  symbols = confirm("do you want symbols in your password?");
   console.log(symbols);
   alphabetLowercase = confirm(
     "do you want lowercase numbers in your password?"
@@ -48,7 +47,6 @@ function generatePassword() {
   //function pull from index
 
   //
-
   if (numbers) {
     confirms = confirms + 1;
   }
