@@ -1,104 +1,77 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
-var passwordLength;
+//established variables and console logged it for full visibility for ourselves
+var alphabetLowerCase = "abcdefghijklmnopqrstuvwxyz";
+var alphabetUpperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var numberChar = "1234567890";
+var symbolChar = "~!@#$%^&*()_+";
 
-var alphabetLowerCase = "abcdefghijklmnopqrstuvwxyz".split("");
-console.log;
-var alphabetCaps = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-console.log;
-var num = "1234567890".split("");
-console.log;
-var sym = "~!@#$%^&*()_+".split("");
-var majorBank = "~!@#$%^&*()_+1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split(
-  ""
-);
-console.log;
-
-// this function returns to the user if there password isn't in our necessary range
+//links with button with user submission and declares passwordlength which will be used in if statement
+//used parseint which converted the string to a #
 function generatePassword() {
-  passwordLength = prompt("how long do you want your password?");
+  var passwordLength = parseInt(prompt("how long do you want your password?"));
+  //this is the alert when the user to re-enter new length
   if (passwordLength > 128 || passwordLength < 8) {
     alert("please choose a new number");
     return generatePassword();
   }
 
-  var numbers = false;
-  var symbols = false;
-  var caps = false;
-  var lowercase = false;
-  var caps = false;
-  var confirms = 0;
+  // questions for user and declairing "has x, y ,z"
+  var hasNumbers = confirm("do you want numbers in your password?");
+  var hasSymbols = confirm("do you want symbols in your password?");
+  var hasLower = confirm("do you want lowercase numbers in your password?");
+  var hasUpper = confirm("do you want uppercase letters your password?");
 
-  //empty on purpose
-  var newpassword = [];
+  // (!(hasNumbers && hasSymbols && hasLower && hasUpper)) { makes ||| entire statement true
+  if (hasNumbers || hasSymbols || hasLower || hasUpper) {
+    console.log("true");
+  } else {
+    alert("please select atleast one of the options");
+    // return generatePassword();
+    return "";
+  }
 
-  // False at first. Later these confirms will be used
-  numbers = confirm("do you want numbers in your password?");
-  console.log(numbers);
-  symbols = confirm("do you want symbols in your password?");
-  console.log(symbols);
-  alphabetLowercase = confirm(
-    "do you want lowercase numbers in your password?"
-  );
-  console.log;
-  alphabetCaps = confirm("do you want uppercase letters your password?");
-  console.log();
+  //strings with collected info stores below
+  var majorBank = "";
+  var newpassword = "";
 
-  //function pull from index
+  if (hasNumbers) {
+    // draws from bank and adds random number to string
+    majorBank += numberChar;
+    newpassword += randomCharFromString(numberChar);
+  }
+
+  if (hasSymbols) {
+    // draws from major bank adds symbols to numbers
+    majorBank += symbolChar;
+    newpassword += randomCharFromString(symbolChar);
+  }
+
+  if (hasUpper) {
+    // draws from major bank adds uppercase symbols and numbers
+    majorBank += alphabetUpperCase;
+    newpassword += randomCharFromString(alphabetUpperCase);
+  }
+
+  if (hasLower) {
+    // draws from major bank adds lowercase to uppercase, symbols and numbers
+    majorBank += alphabetLowerCase;
+    newpassword += randomCharFromString(alphabetLowerCase);
+  }
+
+  //for loop that connects ifs with the new password with user length input
+  for (var i = newpassword.length; i < passwordLength; i++) {
+    newpassword += randomCharFromString(majorBank);
+  }
 
   //
-  if (numbers) {
-    confirms = confirms + 1;
-  }
-
-  if (symbols) {
-    confirms = confirms + 1;
-  }
-  if (caps) {
-    confirms = confirms + 1;
-  }
-  if (lowercase) {
-    confirms = confirms + 1;
-  }
-  console.log(confirms);
-
-  //user selects
-
-  if (numbers) {
-    newpassword.push(num[randomPull(num)]);
-  }
-  //pushes into empty var
-
-  if (symbols) {
-    newpassword.push(sym[randomPull(sym)]);
-  }
-
-  if (lowercase) {
-    newpassword.push(alphabetLowercase[randomPull(alphabetLowercase)]);
-  }
-  if (caps) {
-    newpassword.push(alphabetCaps[randomPull(alphabetCaps)]);
-  }
-  console.log(newpassword);
-
-  //for loop
-
-  for (var i = 0; i < passwordLength - confirms; i++) {
-    newpassword.unshift(majorBank[randomPull(majorBank)]);
-  }
-
-  //before array now string
-  newpassword = newpassword.join("");
-  console.log(newpassword);
   return newpassword;
 }
-
-//orchestrates the if statements
-
-function randomPull(string) {
-  return Math.floor(Math.random() * string.length);
+//random charr from string then is met with random math which jumbles it all together and returns the result
+function randomCharFromString(string) {
+  return string[Math.floor(Math.random() * string.length)];
 }
-
+//given code
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
