@@ -1,3 +1,5 @@
+_added photo to the folder because I don't know how to insert it within tthe readme_
+
 -first declared variables for each character used in the password generator
 
 -Using function, a prompt was created which asked the user to input a desired password length
